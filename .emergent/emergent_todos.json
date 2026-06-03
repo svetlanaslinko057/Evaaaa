@@ -1,0 +1,38 @@
+[
+  {
+    "content": "Backup .env files",
+    "status": "completed"
+  },
+  {
+    "content": "Deploy repo over /app preserving .env, .emergent, .git",
+    "status": "completed"
+  },
+  {
+    "content": "Install backend dependencies",
+    "status": "completed"
+  },
+  {
+    "content": "Install frontend (Expo) dependencies via yarn",
+    "status": "completed"
+  },
+  {
+    "content": "Restart backend & frontend via supervisor",
+    "status": "completed"
+  },
+  {
+    "content": "Run smoke tests",
+    "status": "completed"
+  },
+  {
+    "content": "Audit: count files, endpoints, screens, mongo collections",
+    "status": "completed"
+  },
+  {
+    "content": "Generate AUDIT_REDEPLOY_2026-06-03.md report",
+    "status": "completed"
+  },
+  {
+    "content": "Update /app/memory/test_credentials.md",
+    "status": "completed"
+  }
+]
