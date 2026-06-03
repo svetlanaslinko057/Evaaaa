@@ -42,10 +42,24 @@ export default function DeveloperWorkspaceV2() {
   };
 
   const getLoadBadge = (status) => {
+    // Theme-aware status pill — matches the platform's design language
+    // (used in Projects/Leaderboard cards: subtle tinted bg + accent dot + text).
     const badges = {
-      available: { label: '🟢 ' + tByEn('Available'), className: 'bg-green-500' },
-      optimal: { label: '🟡 ' + tByEn('Optimal'), className: 'bg-yellow-500' },
-      overloaded: { label: '🔴 ' + tByEn('Overloaded'), className: 'bg-red-500' }
+      available: {
+        label: tByEn('Available'),
+        dot:    'bg-emerald-500',
+        wrap:   'bg-emerald-500/10 text-emerald-700 border-emerald-500/30 dark:text-emerald-400 dark:border-emerald-500/20',
+      },
+      optimal: {
+        label: tByEn('Optimal'),
+        dot:    'bg-amber-500',
+        wrap:   'bg-amber-500/10 text-amber-700 border-amber-500/30 dark:text-amber-400 dark:border-amber-500/20',
+      },
+      overloaded: {
+        label: tByEn('Overloaded'),
+        dot:    'bg-rose-500',
+        wrap:   'bg-rose-500/10 text-rose-700 border-rose-500/30 dark:text-rose-400 dark:border-rose-500/20',
+      },
     };
     return badges[status] || badges.available;
   };
@@ -66,11 +80,18 @@ export default function DeveloperWorkspaceV2() {
           <h1 className="text-3xl font-bold">{tByEn('Developer Workspace')}</h1>
           <p className="text-muted-foreground mt-1">{tByEn('Focus zone, active work, and performance')}</p>
         </div>
-        {workload && (
-          <Badge className={getLoadBadge(workload.load_status).className}>
-            {getLoadBadge(workload.load_status).label}
-          </Badge>
-        )}
+        {workload && (() => {
+          const b = getLoadBadge(workload.load_status);
+          return (
+            <span
+              className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-semibold tracking-tight ${b.wrap}`}
+              data-testid="dev-workload-status"
+            >
+              <span className={`w-1.5 h-1.5 rounded-full ${b.dot}`} aria-hidden />
+              {b.label}
+            </span>
+          );
+        })()}
       </div>
 
       {/* Workload Overview */}
