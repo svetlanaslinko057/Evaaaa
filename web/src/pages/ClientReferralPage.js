@@ -90,26 +90,26 @@ const ClientReferralPage = () => {
 
       {/* Earnings Summary */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="rounded-2xl border border-emerald-800/30 bg-emerald-500/5 p-5" data-testid="available-balance">
-          <div className="flex items-center gap-2 text-sm text-emerald-400/70 mb-2">
+        <div className="rounded-2xl border border-emerald-600/40 bg-emerald-500/15 dark:border-emerald-800/30 dark:bg-emerald-500/5 p-5" data-testid="available-balance">
+          <div className="flex items-center gap-2 text-sm font-medium text-emerald-700 dark:text-emerald-400/70 mb-2">
             <DollarSign className="w-4 h-4" />
             {tByEn('Available')}
           </div>
-          <div className="text-3xl font-bold text-emerald-400">
+          <div className="text-3xl font-bold text-emerald-700 dark:text-emerald-400">
             ${(data?.wallet?.available_balance || 0).toLocaleString()}
           </div>
         </div>
-        <div className="rounded-2xl border border-amber-800/30 bg-amber-500/5 p-5" data-testid="pending-balance">
-          <div className="flex items-center gap-2 text-sm text-amber-400/70 mb-2">
+        <div className="rounded-2xl border border-amber-600/40 bg-amber-500/15 dark:border-amber-800/30 dark:bg-amber-500/5 p-5" data-testid="pending-balance">
+          <div className="flex items-center gap-2 text-sm font-medium text-amber-700 dark:text-amber-400/70 mb-2">
             <Clock className="w-4 h-4" />
             {tByEn('Pending')}
           </div>
-          <div className="text-3xl font-bold text-amber-400">
+          <div className="text-3xl font-bold text-amber-700 dark:text-amber-400">
             ${(data?.wallet?.pending_balance || 0).toLocaleString()}
           </div>
         </div>
-        <div className="rounded-2xl border border-border bg-card p-5" data-testid="lifetime-earned">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+        <div className="rounded-2xl border border-border bg-muted/50 dark:bg-card p-5" data-testid="lifetime-earned">
+          <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground mb-2">
             <TrendingUp className="w-4 h-4" />
             {tByEn('Lifetime')}
           </div>
@@ -117,8 +117,8 @@ const ClientReferralPage = () => {
             ${(data?.wallet?.lifetime_earned || 0).toLocaleString()}
           </div>
         </div>
-        <div className="rounded-2xl border border-border bg-card p-5" data-testid="total-referrals">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+        <div className="rounded-2xl border border-border bg-muted/50 dark:bg-card p-5" data-testid="total-referrals">
+          <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground mb-2">
             <Users className="w-4 h-4" />
             {tByEn('Referrals')}
           </div>
