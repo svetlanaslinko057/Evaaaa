@@ -1,38 +1,26 @@
 [
   {
-    "content": "Backup .env files",
+    "content": "Seed active promo banner in MongoDB",
     "status": "completed"
   },
   {
-    "content": "Deploy repo over /app preserving .env, .emergent, .git",
+    "content": "Verify /api/public/banner returns the banner",
     "status": "completed"
   },
   {
-    "content": "Install backend dependencies",
+    "content": "Rebuild web SPA: PUBLIC_URL=/api/web-ui, NO REACT_APP_BACKEND_URL",
     "status": "completed"
   },
   {
-    "content": "Install frontend (Expo) dependencies via yarn",
+    "content": "Verify banner renders on /api/web-ui/ via screenshot",
     "status": "completed"
   },
   {
-    "content": "Restart backend & frontend via supervisor",
+    "content": "Verify Contact modal flow & POST /api/public/contact-leads",
     "status": "completed"
   },
   {
-    "content": "Run smoke tests",
-    "status": "completed"
-  },
-  {
-    "content": "Audit: count files, endpoints, screens, mongo collections",
-    "status": "completed"
-  },
-  {
-    "content": "Generate AUDIT_REDEPLOY_2026-06-03.md report",
-    "status": "completed"
-  },
-  {
-    "content": "Update /app/memory/test_credentials.md",
-    "status": "completed"
+    "content": "Run testing_agent on banner backend + frontend (optional / on demand)",
+    "status": "pending"
   }
 ]
