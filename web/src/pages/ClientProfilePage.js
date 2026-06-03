@@ -262,13 +262,13 @@ export default function ClientProfilePage() {
                 <X className="w-4 h-4 mr-1.5" /> {tByEn('Cancel')}
               </Button>
               <Button size="sm" onClick={onSave} disabled={saving} className="bg-[var(--t-signal)] text-[var(--t-signal-ink)] hover:opacity-90" data-testid="profile-save-btn">
-                <Save className="w-4 h-4 mr-1.5" /> {saving ? 'Saving…' : 'Save'}
+                <Save className="w-4 h-4 mr-1.5" /> {saving ? tByEn('Saving…') : tByEn('Save')}
               </Button>
             </div>
           )}
         </CardHeader>
         <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <Field label="Full name" icon={<User className="w-4 h-4" />} value={form.name} onChange={(v) => setForm({ ...form, name: v })} editing={editing} placeholder={tByEn('Your full name')} testid="field-name" />
+          <Field label={tByEn('Full name')} icon={<User className="w-4 h-4" />} value={form.name} onChange={(v) => setForm({ ...form, name: v })} editing={editing} placeholder={tByEn('Your full name')} testid="field-name" />
           <Field label={tByEn('Phone')} icon={<Phone className="w-4 h-4" />} value={form.phone} onChange={(v) => setForm({ ...form, phone: v })} editing={editing} placeholder="+1 555 555 5555" testid="field-phone" />
           <Field label={tByEn('Company')} icon={<Building2 className="w-4 h-4" />} value={form.company} onChange={(v) => setForm({ ...form, company: v })} editing={editing} placeholder={tByEn('Company name (for contracts)')} testid="field-company" />
           <Field label={tByEn('Timezone')} icon={<Globe className="w-4 h-4" />} value={form.timezone} onChange={(v) => setForm({ ...form, timezone: v })} editing={editing} placeholder={tByEn('e.g., Europe/Berlin')} testid="field-timezone" />
@@ -301,7 +301,7 @@ export default function ClientProfilePage() {
             icon={<KeyRound className="w-5 h-5" />}
             title={tByEn('Two-factor authentication')}
             sub={me?.security?.two_factor_enabled ? tByEn('Enabled — protecting sign-in') : tByEn('Recommended for contract-signing accounts')}
-            cta="Manage 2FA"
+            cta={tByEn('Manage 2FA')}
             onClick={() => navigate('/account/2fa/recovery')}
             testid="manage-2fa-btn"
             highlight={!me?.security?.two_factor_enabled}
@@ -309,8 +309,8 @@ export default function ClientProfilePage() {
           <SecurityRow
             icon={<User className="w-5 h-5" />}
             title={tByEn('Account & sessions')}
-            sub="Password, devices, recovery, data export."
-            cta="Open Account"
+            sub={tByEn('Password, devices, recovery, data export.')}
+            cta={tByEn('Open Account')}
             onClick={() => navigate('/account')}
             testid="manage-account-btn"
           />
@@ -326,8 +326,8 @@ export default function ClientProfilePage() {
         </CardHeader>
         <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <ActionRow icon={<FileText className="w-4 h-4" />} label={tByEn('Documents & contracts')} onClick={() => navigate('/client/documents')} testid="action-documents" />
-          <ActionRow icon={<Gift className="w-4 h-4" />} label="Referrals" onClick={() => navigate('/client/referrals')} testid="action-referrals" />
-          <ActionRow icon={<LifeBuoy className="w-4 h-4" />} label="Support" onClick={() => navigate('/client/support')} testid="action-support" />
+          <ActionRow icon={<Gift className="w-4 h-4" />} label={tByEn('Referrals')} onClick={() => navigate('/client/referrals')} testid="action-referrals" />
+          <ActionRow icon={<LifeBuoy className="w-4 h-4" />} label={tByEn('Support')} onClick={() => navigate('/client/support')} testid="action-support" />
           <ActionRow icon={<Download className="w-4 h-4" />} label={tByEn('Export my data')} onClick={async () => {
             try {
               const r = await runtime.get('/api/account/me/export');

@@ -21,7 +21,7 @@ import { runtime } from '@/runtime';
 const API = process.env.REACT_APP_BACKEND_URL ? `${process.env.REACT_APP_BACKEND_URL}/api` : '/api';
 
 const ValidatorMissionsPage = ({ persona = 'client' }) => {
-  const { tByEn } = useLang();
+  const { t, tByEn } = useLang();
   const [status, setStatus] = useState(null);
   const [missions, setMissions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -43,7 +43,7 @@ const ValidatorMissionsPage = ({ persona = 'client' }) => {
         setMissions([]);
       }
     } catch (e) {
-      setErr(e?.response?.data?.detail || e?.message || 'Failed to load');
+      setErr(e?.response?.data?.detail || e?.message || tByEn('Failed to load'));
     } finally {
       setLoading(false);
     }
@@ -57,7 +57,7 @@ const ValidatorMissionsPage = ({ persona = 'client' }) => {
       await runtime.post(`/api/validator/opt-in`, {});
       await load();
     } catch (e) {
-      setErr(e?.response?.data?.detail || 'Opt-in failed');
+      setErr(e?.response?.data?.detail || tByEn('Opt-in failed'));
     } finally {
       setOptingIn(false);
     }
@@ -84,7 +84,7 @@ const ValidatorMissionsPage = ({ persona = 'client' }) => {
       setActiveMission(null);
       await load();
     } catch (e) {
-      alert(e?.response?.data?.detail || 'Submit failed');
+      alert(e?.response?.data?.detail || tByEn('Submit failed'));
     } finally {
       setSubmitting(false);
     }
@@ -119,20 +119,20 @@ const ValidatorMissionsPage = ({ persona = 'client' }) => {
           </div>
           <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight">
             {persona === 'developer'
-              ? 'Earn extra credits between work units.'
-              : 'Help review products. Earn credits.'}
+              ? tByEn('Earn extra credits between work units.')
+              : tByEn('Help review products. Earn credits.')}
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl">
             {persona === 'developer'
-              ? 'Spot real UX issues on pre-release products from other teams. Admin judges each observation — useful ones earn credits, no money down. Side-channel income while you wait for assignments.'
-              : 'Open pre-release products from other clients, scan for visual / UX issues, submit observations. Admin judges. Useful feedback earns credits + reputation.'}
+              ? tByEn('Spot real UX issues on pre-release products from other teams. Admin judges each observation — useful ones earn credits, no money down. Side-channel income while you wait for assignments.')
+              : tByEn('Open pre-release products from other clients, scan for visual / UX issues, submit observations. Admin judges. Useful feedback earns credits + reputation.')}
           </p>
         </div>
 
         <div className="grid sm:grid-cols-3 gap-3 mb-8">
-          <Bullet num="01" title={tByEn('Open mission')} text="Pick a public mission. Open the preview URL on your device." />
-          <Bullet num="02" title={tByEn('Spot one thing')} text="Layout glitch, broken interaction, confusing copy — anything real." />
-          <Bullet num="03" title={tByEn('Submit + earn')} text="Admin marks it useful → credits land in your balance. No money risk." />
+          <Bullet num="01" title={tByEn('Open mission')}    text={tByEn('Pick a public mission. Open the preview URL on your device.')} />
+          <Bullet num="02" title={tByEn('Spot one thing')}  text={tByEn('Layout glitch, broken interaction, confusing copy — anything real.')} />
+          <Bullet num="03" title={tByEn('Submit + earn')}   text={tByEn('Admin marks it useful → credits land in your balance. No money risk.')} />
         </div>
 
         <button
@@ -143,10 +143,12 @@ const ValidatorMissionsPage = ({ persona = 'client' }) => {
           data-testid="validator-optin-btn"
         >
           {optingIn ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
-          Join the Human Validation Program
+          {tByEn('Join the Human Validation Program')}
         </button>
         <p className="text-xs text-muted-foreground mt-3">
-          Free. Reversible — opt out anytime. No effect on your {persona} role.
+          {persona === 'developer'
+            ? tByEn('Free. Reversible — opt out anytime. No effect on your developer role.')
+            : tByEn('Free. Reversible — opt out anytime. No effect on your client role.')}
         </p>
       </div>
     );
@@ -160,7 +162,7 @@ const ValidatorMissionsPage = ({ persona = 'client' }) => {
           onClick={() => setActiveMission(null)}
           className="text-sm text-[var(--t-signal)] font-semibold mb-4 hover:underline"
         >
-          ← Back to missions
+          {tByEn('← Back to missions')}
         </button>
 
         <h2 className="text-2xl font-semibold tracking-tight mb-1">{activeMission.project_title}</h2>
@@ -186,13 +188,13 @@ const ValidatorMissionsPage = ({ persona = 'client' }) => {
               <KindOption
                 active={form.kind === 'looks_good'}
                 onClick={() => setForm({ ...form, kind: 'looks_good' })}
-                label="👍 Looks good"
+                label={tByEn('👍 Looks good')}
                 accent="#10B981"
               />
               <KindOption
                 active={form.kind === 'issue'}
                 onClick={() => setForm({ ...form, kind: 'issue' })}
-                label="⚠ Issue"
+                label={tByEn('⚠ Issue')}
                 accent="#F59E0B"
               />
             </div>
@@ -221,7 +223,7 @@ const ValidatorMissionsPage = ({ persona = 'client' }) => {
 
           <div>
             <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">
-              Comment (optional)
+              {tByEn('Comment (optional)')}
             </label>
             <textarea
               value={form.comment}
@@ -235,7 +237,7 @@ const ValidatorMissionsPage = ({ persona = 'client' }) => {
 
           <div>
             <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">
-              Platform / browser (optional)
+              {tByEn('Platform / browser (optional)')}
             </label>
             <input
               value={form.platform_hint}
@@ -253,11 +255,10 @@ const ValidatorMissionsPage = ({ persona = 'client' }) => {
             data-testid="mission-submit-btn"
           >
             {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle2 className="w-4 h-4" />}
-            Submit observation
+            {tByEn('Submit observation')}
           </button>
           <p className="text-xs text-muted-foreground">
-            Admin reviews each observation. Useful ones earn credits (~{activeMission.reward_per_useful || 25}c).
-            Irrelevant submissions reduce your reputation. One submission per mission.
+            {t('cli.v_reward_note', 'Admin reviews each observation. Useful ones earn credits (~{n}c). Irrelevant submissions reduce your reputation. One submission per mission.').replace('{n}', activeMission.reward_per_useful || 25)}
           </p>
         </div>
       </div>
@@ -270,10 +271,10 @@ const ValidatorMissionsPage = ({ persona = 'client' }) => {
     <div className="max-w-7xl mx-auto space-y-6" data-testid="validator-missions-screen">
       {/* Profile header */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <Stat label="Credits" value={profile.credits_balance ?? 0} accent="var(--t-signal)" icon={Award} />
+        <Stat label={tByEn('Credits')} value={profile.credits_balance ?? 0} accent="var(--t-signal)" icon={Award} />
         <Stat label={tByEn('Reputation')} value={`${profile.reputation_score ?? 50}/100`} />
-        <Stat label="Useful" value={profile.useful_count ?? 0} accent="#10B981" />
-        <Stat label="Submissions" value={profile.total_submissions ?? 0} />
+        <Stat label={tByEn('Useful')} value={profile.useful_count ?? 0} accent="#10B981" />
+        <Stat label={tByEn('Submissions')} value={profile.total_submissions ?? 0} />
       </div>
 
       <div className="flex items-end justify-between">
@@ -281,8 +282,8 @@ const ValidatorMissionsPage = ({ persona = 'client' }) => {
           <h1 className="text-3xl font-semibold tracking-tight">{tByEn('Open missions')}</h1>
           <p className="text-sm text-muted-foreground">
             {persona === 'developer'
-              ? 'Pre-release products from other teams. Spot real issues → earn credits.'
-              : 'Help other teams find issues before launch. Earn credits when useful.'}
+              ? tByEn('Pre-release products from other teams. Spot real issues → earn credits.')
+              : tByEn('Help other teams find issues before launch. Earn credits when useful.')}
           </p>
         </div>
       </div>
@@ -292,7 +293,7 @@ const ValidatorMissionsPage = ({ persona = 'client' }) => {
           <Eye className="w-8 h-8 text-muted-foreground mx-auto mb-3" />
           <div className="text-lg font-semibold mb-1">{tByEn('No open missions right now')}</div>
           <p className="text-sm text-muted-foreground">
-            Check back later — admin launches sessions as projects approach release.
+            {tByEn('Check back later — admin launches sessions as projects approach release.')}
           </p>
         </div>
       )}
@@ -314,10 +315,10 @@ const ValidatorMissionsPage = ({ persona = 'client' }) => {
             <div className="text-xs text-muted-foreground mb-3">{m.goal}</div>
             <div className="flex items-center gap-3 text-xs">
               <span className="text-muted-foreground">
-                {m.validators_count || 0}/{m.max_validators} validators
+                {t('cli.v_validators_count', '{n}/{m} validators').replace('{n}', m.validators_count || 0).replace('{m}', m.max_validators)}
               </span>
               <span className="text-muted-foreground">·</span>
-              <span className="text-foreground font-medium">{labelDeadline(m.deadline_at)}</span>
+              <span className="text-foreground font-medium">{labelDeadline(m.deadline_at, tByEn)}</span>
             </div>
           </button>
         ))}
@@ -358,14 +359,14 @@ const Stat = ({ label, value, accent, icon: Icon }) => (
   </div>
 );
 
-function labelDeadline(iso) {
+function labelDeadline(iso, tr) {
   try {
     const dl = new Date(iso).getTime();
     // presentation-only: presentation clamp / non-negative time display
     const hours = Math.max(0, Math.round((dl - Date.now()) / 36e5));
-    if (hours < 1) return 'closing soon';
-    if (hours < 24) return `${hours}h left`;
-    return `${Math.round(hours / 24)}d left`;
+    if (hours < 1)  return tr ? tr('closing soon') : 'closing soon';
+    if (hours < 24) return (tr ? tr('{n}h left') : '{n}h left').replace('{n}', hours);
+    return (tr ? tr('{n}d left') : '{n}d left').replace('{n}', Math.round(hours / 24));
   } catch { return ''; }
 }
 

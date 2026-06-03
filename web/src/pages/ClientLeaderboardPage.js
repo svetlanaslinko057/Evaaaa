@@ -6,13 +6,13 @@ import { ApiError } from '@/runtime-client';
 import { Trophy, DollarSign, Users, TrendingUp, Crown, Medal, Hash, ArrowUp } from 'lucide-react';
 
 const TABS = [
-  { key: 'score', label: 'Top Score', icon: TrendingUp },
-  { key: 'revenue', label: 'Revenue', icon: DollarSign },
-  { key: 'referrals', label: 'Referrals', icon: Users },
+  { key: 'score',     enLabel: 'Top Score',  icon: TrendingUp },
+  { key: 'revenue',   enLabel: 'Revenue',    icon: DollarSign },
+  { key: 'referrals', enLabel: 'Referrals',  icon: Users },
 ];
 
 const ClientLeaderboardPage = () => {
-  const { tByEn } = useLang();
+  const { t, tByEn } = useLang();
   const { user } = useAuth();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -71,7 +71,7 @@ const ClientLeaderboardPage = () => {
         </div>
         <div>
           <h1 className="text-2xl font-bold text-foreground" data-testid="leaderboard-title">{tByEn('Client Leaderboard')}</h1>
-          <p className="text-sm text-muted-foreground">{data?.total || 0} clients competing</p>
+          <p className="text-sm text-muted-foreground">{t('cli.lb_competing', '{n} clients competing').replace('{n}', data?.total || 0)}</p>
         </div>
       </div>
 
@@ -84,7 +84,7 @@ const ClientLeaderboardPage = () => {
             </div>
             <div>
               <div className="text-sm font-medium text-foreground">{me.name}</div>
-              <div className="text-xs text-muted-foreground capitalize">{me.tier} tier</div>
+              <div className="text-xs text-muted-foreground">{t('cli.lb_tier_label', '{tier} tier').replace('{tier}', me.tier || '')}</div>
             </div>
           </div>
           <div className="text-right">
@@ -110,7 +110,7 @@ const ClientLeaderboardPage = () => {
               data-testid={`tab-${tab.key}`}
             >
               <Icon className="w-4 h-4" />
-              {tab.label}
+              {tByEn(tab.enLabel)}
             </button>
           );
         })}
@@ -140,7 +140,7 @@ const ClientLeaderboardPage = () => {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <span className={`text-sm font-medium truncate ${isMe ? 'text-signal' : 'text-foreground'}`}>
-                      {item.name || 'Unknown'}
+                      {item.name || tByEn('Unknown')}
                     </span>
                     {isMe && <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-signal/20 text-signal">{tByEn('YOU')}</span>}
                   </div>
@@ -148,7 +148,7 @@ const ClientLeaderboardPage = () => {
                     <span className={`px-2 py-0.5 rounded-md text-[10px] font-medium capitalize border ${tierColors[item.tier] || tierColors.starter}`}>
                       {item.tier}
                     </span>
-                    <span className="text-[11px] text-muted-foreground">{item.repeat_projects || 0} projects</span>
+                    <span className="text-[11px] text-muted-foreground">{t('cli.lb_n_projects', '{n} projects').replace('{n}', item.repeat_projects || 0)}</span>
                   </div>
                 </div>
                 <div className="text-right shrink-0">
@@ -165,7 +165,7 @@ const ClientLeaderboardPage = () => {
       {me && me.rank > 20 && (
         <div className="flex items-center gap-2 text-xs text-muted-foreground justify-center pt-2">
           <ArrowUp className="w-3 h-3 text-signal" />
-          <span>You're ranked #{me.rank}. Keep building to climb!</span>
+          <span>{t('cli.lb_keep_building', "You're ranked #{n}. Keep building to climb!").replace('{n}', me.rank)}</span>
         </div>
       )}
     </div>

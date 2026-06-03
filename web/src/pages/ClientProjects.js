@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 
 const ClientProjects = () => {
-  const { tByEn } = useLang();
+  const { t, tByEn } = useLang();
   const { user } = useAuth();
   const navigate = useNavigate();
   const [projects, setProjects] = useState([]);
@@ -107,7 +107,7 @@ const ClientProjects = () => {
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-semibold tracking-tight mb-2">{tByEn('Your Projects')}</h1>
-        <p className="text-muted-foreground">{allItems.length} total projects</p>
+        <p className="text-muted-foreground">{t('cli.projects_total_count', '{n} total projects').replace('{n}', allItems.length)}</p>
       </div>
 
       {/* Search & Filters */}
@@ -125,15 +125,20 @@ const ClientProjects = () => {
         
         {/* Filter Tabs */}
         <div className="flex bg-[var(--t-surface-raised)] border border-border rounded-xl p-1">
-          {['all', 'pending', 'active', 'completed'].map(f => (
+          {[
+            { key: 'all',       enLabel: 'All' },
+            { key: 'pending',   enLabel: 'Pending' },
+            { key: 'active',    enLabel: 'Active' },
+            { key: 'completed', enLabel: 'Completed' },
+          ].map(({ key, enLabel }) => (
             <button
-              key={f}
-              onClick={() => setFilter(f)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all capitalize ${
-                filter === f ? 'bg-signal text-white' : 'text-muted-foreground hover:text-white'
+              key={key}
+              onClick={() => setFilter(key)}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                filter === key ? 'bg-signal text-white' : 'text-muted-foreground hover:text-white'
               }`}
             >
-              {f}
+              {tByEn(enLabel)}
             </button>
           ))}
         </div>
@@ -198,7 +203,7 @@ const ClientProjects = () => {
                 disabled={deleting}
                 className="flex-1 py-3 bg-red-500 hover:bg-red-400 text-white rounded-xl font-medium transition-all disabled:opacity-50"
               >
-                {deleting ? 'Deleting...' : 'Delete'}
+                {deleting ? tByEn('Deleting...') : tByEn('Delete')}
               </button>
             </div>
           </div>
@@ -230,58 +235,58 @@ const ProjectCard = ({ item, onOpen, onDelete }) => {
   
   const statusConfig = {
     idea_submitted: { 
-      label: 'Submitted', 
+      label: tByEn('Submitted'), 
       color: 'text-amber-400 bg-amber-500/10',
       icon: Clock,
-      message: 'Your idea is being reviewed'
+      message: tByEn('Your idea is being reviewed')
     },
     pending: { 
-      label: 'Submitted', 
+      label: tByEn('Submitted'), 
       color: 'text-amber-400 bg-amber-500/10',
       icon: Clock,
-      message: 'Your idea is being reviewed'
+      message: tByEn('Your idea is being reviewed')
     },
     reviewing: { 
-      label: 'Reviewing', 
+      label: tByEn('Reviewing'), 
       color: 'text-signal bg-signal/10',
       icon: Sparkles,
-      message: 'We are analyzing your request'
+      message: tByEn('We are analyzing your request')
     },
     proposal_ready: { 
-      label: 'Proposal Ready', 
+      label: tByEn('Proposal Ready'), 
       color: 'text-signal bg-signal/10',
       icon: FileText,
-      message: 'Your project plan is ready'
+      message: tByEn('Your project plan is ready')
     },
     awaiting_approval: { 
-      label: 'Awaiting Approval', 
+      label: tByEn('Awaiting Approval'), 
       color: 'text-signal bg-signal/10',
       icon: Clock,
-      message: 'Waiting for your approval to start'
+      message: tByEn('Waiting for your approval to start')
     },
     active: { 
-      label: 'Active', 
+      label: tByEn('Active'), 
       color: 'text-emerald-400 bg-emerald-500/10',
       icon: Zap,
-      message: 'Development in progress'
+      message: tByEn('Development in progress')
     },
     delivery: { 
-      label: 'Delivery', 
+      label: tByEn('Delivery'), 
       color: 'text-signal bg-signal/10',
       icon: FileText,
-      message: 'Deliverables ready for review'
+      message: tByEn('Deliverables ready for review')
     },
     completed: { 
-      label: 'Completed', 
+      label: tByEn('Completed'), 
       color: 'text-emerald-400 bg-emerald-500/10',
       icon: CheckCircle2,
-      message: 'Project completed'
+      message: tByEn('Project completed')
     },
   }[status] || { 
     label: status, 
     color: 'text-zinc-400 bg-zinc-500/10',
     icon: Clock,
-    message: 'Processing'
+    message: tByEn('Processing')
   };
 
   const StatusIcon = statusConfig.icon;
@@ -335,14 +340,15 @@ const ProjectCard = ({ item, onOpen, onDelete }) => {
 };
 
 const SORT_OPTIONS = [
-  { value: 'newest', label: 'Newest first' },
-  { value: 'oldest', label: 'Oldest first' },
-  { value: 'name', label: 'By name' },
+  { value: 'newest', enLabel: 'Newest first' },
+  { value: 'oldest', enLabel: 'Oldest first' },
+  { value: 'name',   enLabel: 'By name' },
 ];
 
 const SortDropdown = ({ value, onChange }) => {
+  const { tByEn } = useLang();
   const [open, setOpen] = useState(false);
-  const currentLabel = SORT_OPTIONS.find((o) => o.value === value)?.label || 'Sort';
+  const currentLabel = SORT_OPTIONS.find((o) => o.value === value)?.enLabel || 'Sort';
 
   useEffect(() => {
     if (!open) return;
@@ -361,7 +367,7 @@ const SortDropdown = ({ value, onChange }) => {
         aria-haspopup="listbox"
         aria-expanded={open}
       >
-        <span>{currentLabel}</span>
+        <span>{tByEn(currentLabel)}</span>
         <ChevronDown className={`w-4 h-4 transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
       {open && (
@@ -385,7 +391,7 @@ const SortDropdown = ({ value, onChange }) => {
                 }`}
                 data-testid={`sort-dropdown-option-${opt.value}`}
               >
-                <span>{opt.label}</span>
+                <span>{tByEn(opt.enLabel)}</span>
                 {selected && <Check className="w-4 h-4" />}
               </li>
             );

@@ -1,26 +1,34 @@
 [
   {
-    "content": "Seed active promo banner in MongoDB",
+    "content": "Add UK dictionary entries for client cabinet (~140 strings)",
     "status": "completed"
   },
   {
-    "content": "Verify /api/public/banner returns the banner",
+    "content": "Wrap literals with tByEn() in ClientProjects.js (filters, sort, status labels, modal)",
     "status": "completed"
   },
   {
-    "content": "Rebuild web SPA: PUBLIC_URL=/api/web-ui, NO REACT_APP_BACKEND_URL",
+    "content": "Wrap literals with tByEn() in ClientLeaderboardPage.js (tabs, tier, projects, keep building)",
     "status": "completed"
   },
   {
-    "content": "Verify banner renders on /api/web-ui/ via screenshot",
+    "content": "Wrap literals with tByEn() in ValidatorMissionsPage.js (title, sub, bullets, CTAs)",
     "status": "completed"
   },
   {
-    "content": "Verify Contact modal flow & POST /api/public/contact-leads",
+    "content": "Wrap literals + theme refactor in ClientReferralPage.js (light theme: zinc-* → theme tokens)",
     "status": "completed"
   },
   {
-    "content": "Run testing_agent on banner backend + frontend (optional / on demand)",
-    "status": "pending"
+    "content": "Wrap literals in ClientProfilePage.js (Full name, Save, Manage 2FA, Open Account)",
+    "status": "completed"
+  },
+  {
+    "content": "Rebuild Web SPA + verify on preview URL",
+    "status": "completed"
+  },
+  {
+    "content": "Screenshot verification of all 5 pages in UK",
+    "status": "completed"
   }
 ]
